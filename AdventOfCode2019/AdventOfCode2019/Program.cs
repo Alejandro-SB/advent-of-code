@@ -8,9 +8,9 @@ namespace AdventOfCode2019
     {
         async static Task Main(string[] args)
         {
-            var s = await Day2.Part1();
+            var solution = await Day5.Part1();
 
-            Console.WriteLine(s);
+            Console.WriteLine(solution);
         }
     }
 }

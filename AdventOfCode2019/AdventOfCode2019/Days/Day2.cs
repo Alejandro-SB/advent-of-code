@@ -12,9 +12,7 @@ namespace AdventOfCode2019.Days
     {
         public async static Task<int> Part1()
         {
-            var lines = await FileHelper.GetInputLinesAsync("2.txt");
-
-            var input = lines.First().Split(',', StringSplitOptions.RemoveEmptyEntries).Select(x => int.Parse(x)).ToArray();
+            var input = await GetInputFromFile();
 
             input[1] = 12;
             input[2] = 2;
@@ -26,7 +24,27 @@ namespace AdventOfCode2019.Days
 
         public async static Task<int> Part2()
         {
-            throw new NotImplementedException();
+            var input = await GetInputFromFile();
+
+            for (int verb = 0; verb < 100; ++verb)
+            {
+                for (int noun = 0; noun < 100; ++noun)
+                {
+                    int[] copy = new int[input.Length];
+                    Array.Copy(input, 0, copy, 0, input.Length);
+                    copy[1] = noun;
+                    copy[2] = verb;
+
+                    var alarm = CalculateAlarm(copy);
+
+                    if (alarm[0] == 19690720)
+                    {
+                        return 100 * noun + verb;
+                    }
+                }
+            }
+
+            return 0;
         }
 
         public static int[] CalculateAlarm(int[] input)
@@ -65,6 +83,13 @@ namespace AdventOfCode2019.Days
             }
 
             return input;
+        }
+
+        private static async Task<int[]> GetInputFromFile()
+        {
+            var lines = await FileHelper.GetInputLinesAsync("2.txt");
+
+            return lines.First().Split(',', StringSplitOptions.RemoveEmptyEntries).Select(x => int.Parse(x)).ToArray();
         }
     }
 }
